@@ -8,8 +8,8 @@ import (
 )
 
 type config struct {
-	Next     *string
-	Previous *string
+	NextLocationURL     *string
+	PreviousLocationURL *string
 }
 
 type cliCommand struct {
@@ -33,12 +33,7 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
-var firstPage = "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20"
-
-func startRepl() {
-	cfg := &config{}
-	cfg.Next = &firstPage
-
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Welcome to the Pokedex!")
