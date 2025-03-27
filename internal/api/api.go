@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"github.com/mattr/pokedex/internal/cache"
 	"io"
 	"net/http"
 )
@@ -21,11 +22,16 @@ type LocationAreaResult struct {
 	} `json:"results"`
 }
 
-func FetchLocations(page *string) (*LocationAreaResult, error) {
+func FetchLocations(page *string, cache *cache.Cache) (*LocationAreaResult, error) {
 	url := baseUrl + "/location-area"
 	if page != nil {
 		url = *page
 	}
+
+	if resp, ok := cache.Get(url); ok {
+		return parseLocationAreaResult(resp)
+	}
+
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -41,11 +47,15 @@ func FetchLocations(page *string) (*LocationAreaResult, error) {
 		return nil, err
 	}
 
+	cache.Add(url, data)
+	return parseLocationAreaResult(data)
+}
+
+func parseLocationAreaResult(data []byte) (*LocationAreaResult, error) {
 	result := &LocationAreaResult{}
-	err = json.Unmarshal(data, result)
+	err := json.Unmarshal(data, result)
 	if err != nil {
 		return nil, err
 	}
-
 	return result, nil
 }

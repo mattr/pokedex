@@ -3,11 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/mattr/pokedex/internal/cache"
 	"os"
 	"strings"
 )
 
 type config struct {
+	Cache               *cache.Cache
 	NextLocationURL     *string
 	PreviousLocationURL *string
 }

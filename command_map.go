@@ -6,8 +6,7 @@ import (
 )
 
 func commandMap(cfg *config) error {
-
-	result, err := api.FetchLocations(cfg.NextLocationURL)
+	result, err := api.FetchLocations(cfg.NextLocationURL, cfg.Cache)
 	if err != nil {
 		return err
 	}
@@ -30,7 +29,7 @@ func commandMapb(cfg *config) error {
 		return nil
 	}
 
-	result, err := api.FetchLocations(cfg.PreviousLocationURL)
+	result, err := api.FetchLocations(cfg.PreviousLocationURL, cfg.Cache)
 	if err != nil {
 		return err
 	}
