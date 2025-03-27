@@ -24,6 +24,11 @@ func Test_cleanInput(t *testing.T) {
 			args:     args{input: "Pikachu BULBASAUR CharMander"},
 			expected: []string{"pikachu", "bulbasaur", "charmander"},
 		},
+		{
+			name:     "Test spaces is empty slice",
+			args:     args{input: "     "},
+			expected: []string{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
