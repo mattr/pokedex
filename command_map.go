@@ -5,8 +5,8 @@ import (
 	"github.com/mattr/pokedex/internal/api"
 )
 
-func commandMap(cfg *config) error {
-	result, err := api.FetchLocations(cfg.NextLocationURL, cfg.Cache)
+func commandMap(cfg *config, args []string) error {
+	result, err := api.GetLocationAreas(cfg.NextLocationURL, cfg.Cache)
 	if err != nil {
 		return err
 	}
@@ -23,13 +23,13 @@ func commandMap(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, args []string) error {
 	if cfg.PreviousLocationURL == nil {
 		fmt.Println("You are on the first page")
 		return nil
 	}
 
-	result, err := api.FetchLocations(cfg.PreviousLocationURL, cfg.Cache)
+	result, err := api.GetLocationAreas(cfg.PreviousLocationURL, cfg.Cache)
 	if err != nil {
 		return err
 	}

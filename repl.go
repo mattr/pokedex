@@ -17,7 +17,7 @@ type config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, []string) error
 }
 
 func cleanInput(input string) []string {
@@ -28,10 +28,11 @@ func cleanInput(input string) []string {
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
-		"exit": {name: "exit", description: "Exit the Pokedex", callback: commandExit},
-		"help": {name: "help", description: "Show the help message", callback: commandHelp},
-		"map":  {name: "map", description: "Retrieve the next page of locations", callback: commandMap},
-		"mapb": {name: "mapb", description: "Retrieve the previous page of locations", callback: commandMapb},
+		"exit":    {name: "exit", description: "Exit the Pokedex", callback: commandExit},
+		"explore": {name: "explore", description: "Explore a location, accepts a name as argument", callback: commandExplore},
+		"help":    {name: "help", description: "Show the help message", callback: commandHelp},
+		"map":     {name: "map", description: "Retrieve the next page of locations", callback: commandMap},
+		"mapb":    {name: "mapb", description: "Retrieve the previous page of locations", callback: commandMapb},
 	}
 }
 
@@ -51,7 +52,7 @@ func startRepl(cfg *config) {
 
 			cmd, ok := getCommands()[words[0]]
 			if ok {
-				err := cmd.callback(cfg)
+				err := cmd.callback(cfg, words[1:])
 				if err != nil {
 					fmt.Println(err)
 					continue
