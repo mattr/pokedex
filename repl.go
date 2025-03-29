@@ -8,8 +8,14 @@ import (
 	"strings"
 )
 
+type Pokemon struct {
+	Name           string
+	BaseExperience int
+}
+
 type config struct {
 	Cache               *cache.Cache
+	Pokedex             map[string]Pokemon
 	NextLocationURL     *string
 	PreviousLocationURL *string
 }
@@ -28,6 +34,7 @@ func cleanInput(input string) []string {
 
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
+		"catch":   {name: "catch", description: "Attempt to catch a Pokemon", callback: CommandCatch},
 		"exit":    {name: "exit", description: "Exit the Pokedex", callback: commandExit},
 		"explore": {name: "explore", description: "Explore a location, accepts a name as argument", callback: commandExplore},
 		"help":    {name: "help", description: "Show the help message", callback: commandHelp},

@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	cfg := &config{Cache: cache.NewCache(30 * time.Second)}
+	cfg := &config{Cache: cache.NewCache(30 * time.Second), Pokedex: make(map[string]Pokemon)}
 	startRepl(cfg)
 }
