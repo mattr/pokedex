@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-type LocationAreaResult struct {
+type LocationArea struct {
 	ID                   int    `json:"id"`
 	Name                 string `json:"name"`
 	GameIndex            int    `json:"game_index"`
@@ -36,7 +36,7 @@ type LocationAreaResult struct {
 	} `json:"pokemon_encounters"`
 }
 
-func GetLocationArea(name *string, cache *cache.Cache) (*LocationAreaResult, error) {
+func GetLocationArea(name *string, cache *cache.Cache) (*LocationArea, error) {
 	if name == nil {
 		return nil, errors.New("location area name is required")
 	}
@@ -65,8 +65,8 @@ func GetLocationArea(name *string, cache *cache.Cache) (*LocationAreaResult, err
 	return parseLocationAreaResult(data)
 }
 
-func parseLocationAreaResult(data []byte) (*LocationAreaResult, error) {
-	result := &LocationAreaResult{}
+func parseLocationAreaResult(data []byte) (*LocationArea, error) {
+	result := &LocationArea{}
 	err := json.Unmarshal(data, result)
 	if err != nil {
 		return nil, err

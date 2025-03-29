@@ -24,13 +24,9 @@ func CommandCatch(cfg *config, args []string) error {
 	rnd := rand.Intn(1000)
 	if rnd > exp {
 		fmt.Printf("%s was caught!\n", name)
-		cfg.Pokedex[name] = pokemonFromResult(result)
+		cfg.Pokedex[name] = *result
 	} else {
 		fmt.Printf("%s escaped!\n", name)
 	}
 	return nil
-}
-
-func pokemonFromResult(result *api.PokemonResult) Pokemon {
-	return Pokemon{Name: result.Name, BaseExperience: result.BaseExperience}
 }

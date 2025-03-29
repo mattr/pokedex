@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-type LocationAreasResult struct {
+type LocationAreas struct {
 	Count    int     `json:"count"`
 	Next     *string `json:"next"`
 	Previous *string `json:"previous"`
@@ -18,7 +18,7 @@ type LocationAreasResult struct {
 	} `json:"results"`
 }
 
-func GetLocationAreas(page *string, cache *cache.Cache) (*LocationAreasResult, error) {
+func GetLocationAreas(page *string, cache *cache.Cache) (*LocationAreas, error) {
 	url := baseUrl + "/location-area"
 	if page != nil {
 		url = *page
@@ -47,8 +47,8 @@ func GetLocationAreas(page *string, cache *cache.Cache) (*LocationAreasResult, e
 	return parseLocationAreasResult(data)
 }
 
-func parseLocationAreasResult(data []byte) (*LocationAreasResult, error) {
-	result := &LocationAreasResult{}
+func parseLocationAreasResult(data []byte) (*LocationAreas, error) {
+	result := &LocationAreas{}
 	err := json.Unmarshal(data, result)
 	if err != nil {
 		return nil, err

@@ -3,19 +3,15 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/mattr/pokedex/internal/api"
 	"github.com/mattr/pokedex/internal/cache"
 	"os"
 	"strings"
 )
 
-type Pokemon struct {
-	Name           string
-	BaseExperience int
-}
-
 type config struct {
 	Cache               *cache.Cache
-	Pokedex             map[string]Pokemon
+	Pokedex             map[string]api.Pokemon
 	NextLocationURL     *string
 	PreviousLocationURL *string
 }
@@ -38,6 +34,7 @@ func getCommands() map[string]cliCommand {
 		"exit":    {name: "exit", description: "Exit the Pokedex", callback: commandExit},
 		"explore": {name: "explore", description: "Explore a location, accepts a name as argument", callback: commandExplore},
 		"help":    {name: "help", description: "Show the help message", callback: commandHelp},
+		"inspect": {name: "inspect", description: "Inspect a Pokemon in your Pokedex", callback: commandInspect},
 		"map":     {name: "map", description: "Retrieve the next page of locations", callback: commandMap},
 		"mapb":    {name: "mapb", description: "Retrieve the previous page of locations", callback: commandMapb},
 	}
